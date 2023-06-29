@@ -1,0 +1,1 @@
+from azure_key_vault_loader._version import __version__
