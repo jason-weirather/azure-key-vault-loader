@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='azure_vault_loader',
-    version='0.1.0',
+    version='0.2.0',
     url='https://github.com/jason-weirather/azure-vault-loader',
     author='Jason L Weirather',
     author_email='jason.weirather@gmail.com',
