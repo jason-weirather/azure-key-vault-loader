@@ -102,3 +102,6 @@ def run_obfuscate_service_principals():
 
     if args.verbose:
         print(f'Service principals obfuscated and written to: {args.output}')
+
+if __name__ == '__main__':
+    main()
