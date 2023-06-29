@@ -73,7 +73,7 @@ def run_obfuscate_service_principals():
     -v, --verbose: Show more outputs
     -j, --json: Path to the JSON file containing the service principals to obfuscate.
     -o, --output: Path to the output file for the obfuscated service principals.
-    -k, --key: The key for obfuscation.
+    -k, --key: The file containing the text key for obfuscation.
 
     Example usage:
     python run_obfuscate_service_principals.py -j principals.json -o obfuscated_principals -k obfuscation_key
@@ -82,14 +82,17 @@ def run_obfuscate_service_principals():
     parser.add_argument('-v', '--verbose', action='store_true', help='Show more details')
     parser.add_argument('-j', '--json', help='The JSON file containing service principals to obfuscate', required=True)
     parser.add_argument('-o', '--output', help='The output file for the obfuscated service principals', required=True)
-    parser.add_argument('-k', '--key', help='The key for obfuscation', required=True)
+    parser.add_argument('-k', '--key', help='Read a key from a text file for obfuscation', required=True)
     args = parser.parse_args()
 
     # Load service principals from JSON file
     with open(args.json, 'r') as f:
         service_principals = json.load(f)
 
-    obfuscated_service_principals = obfuscate_service_principals(args.key,service_principals)
+    with open(args.key, 'r') as f:
+        obfuscation_key = f.read().strip()
+
+    obfuscated_service_principals = obfuscate_service_principals(obfuscation_key,service_principals)
 
     # Write obfuscated service principals to output file
     with open(args.output, 'wb') as f:
