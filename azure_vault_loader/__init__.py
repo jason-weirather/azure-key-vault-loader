@@ -1,1 +1,1 @@
-from azure_key_vault_loader._version import __version__
+from azure_vault_loader._version import __version__

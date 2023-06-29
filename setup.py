@@ -23,9 +23,13 @@ setup(
     entry_points={
         'console_scripts': [
             'load_azure_secrets = azure_vault_loader.cli:main',
-            'obfuscate_service_principals = azure_vault_loader.cli:obfuscate_service_principals',
+            'obfuscate_service_principals = azure_vault_loader.cli:run_obfuscate_service_principals',
         ],
     },
+    install_requires=[
+        'azure-identity',
+        'azure-keyvault-secrets'
+    ],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
