@@ -6,7 +6,7 @@ import json
 from azure.identity import ClientSecretCredential
 from azure.keyvault.secrets import SecretClient
 
-from .crypto_utils import decrypt_service_principals, obfuscate_service_principals
+from azure_vault_loader.crypto_utils import decrypt_service_principals, obfuscate_service_principals
 
 def main():
     """
