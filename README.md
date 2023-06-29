@@ -15,7 +15,7 @@ pip install azure-vault-loader
 ## Usage
 
 ```bash
-load_azure_secrets -k obfuscation_key -p principals -m map -c command -u url
+load_azure_secrets -k obfuscation_key -p principals -m map -u url -c command with or without arguments
 ```
 
 - `-k, --obfuscation_key`: The key used for reading an obfuscated principals file. If this option is provided, the tool will attempt to decrypt the service principals file.
