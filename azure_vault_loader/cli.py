@@ -30,7 +30,7 @@ def main():
     parser.add_argument('-p', '--principals', help='The Azure service principals', required=True)
     parser.add_argument('-m', '--map', help='The JSON file containing secret names and the environment variable names as key-value pairs', required=True)
     parser.add_argument('-u', '--url', help='The URL of your Azure Key Vault', required=True)
-    parser.add_argument('-c', '--command', nargs='+', help='The command to run after loading secrets', required=True)
+    parser.add_argument('-c', '--command', nargs=argparse.REMAINDER, help='The command to run after loading secrets', required=True)
     args = parser.parse_args()
 
     if args.verbose:
