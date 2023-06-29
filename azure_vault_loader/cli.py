@@ -3,23 +3,39 @@ import os
 import subprocess
 import json
 
-
 from azure.identity import ClientSecretCredential
 from azure.keyvault.secrets import SecretClient
 
 from .crypto_utils import decrypt_service_principals, obfuscate_service_principals
 
 def main():
+    """
+    Reads either a plain text or obfuscated service principal file, fetches secrets from Azure Key Vault
+    and sets them as environment variables. Afterwards, it runs a provided command with these environment variables.
+
+    The command line arguments expected by the function are:
+    -v, --verbose: Show more outputs
+    -k, --obfuscation_key: An optional key used for decrypting an obfuscated principals file.
+    -p, --principals: Path to the file containing the Azure service principals.
+    -m, --map: Path to a JSON file containing a mapping between secret names and environment variable names.
+    -u, --url: The URL of your Azure Key Vault.
+    -c, --command: The command to run after loading the secrets. All arguments after -c are considered part of the command.
+
+    Example usage:
+    python main.py -k obfuscation_key -p principals.json -m map.json -c python script.py arg1 arg2 -u https://yourvault.vault.azure.net/
+    """
     parser = argparse.ArgumentParser(description='Load secrets from Azure Key Vault into environment variables.')
+    parser.add_argument('-v', '--verbose', action='store_true', help='Show more details')
     parser.add_argument('-k', '--obfuscation_key', help='The key used for reading an obfuscated principals file')
     parser.add_argument('-p', '--principals', help='The Azure service principals', required=True)
     parser.add_argument('-m', '--map', help='The JSON file containing secret names and the environment variable names as key-value pairs', required=True)
-    parser.add_argument('-c', '--command', nargs='+', help='The command to run after loading secrets', required=True)
     parser.add_argument('-u', '--url', help='The URL of your Azure Key Vault', required=True)
+    parser.add_argument('-c', '--command', nargs='+', help='The command to run after loading secrets', required=True)
     args = parser.parse_args()
 
-    print(f'Map: {args.map}')
-    print(f'Command: {args.command}')
+    if args.verbose:
+        print(f'Map: {args.map}')
+        print(f'Command: {args.command}')
 
     # If an obfuscation key is given, decrypt the service principals file
     if args.obfuscation_key:
@@ -50,7 +66,20 @@ def main():
 
 
 def run_obfuscate_service_principals():
+    """
+    Reads a service principal file, obfuscates it using a provided key, and writes the result to an output file.
+
+    The command line arguments expected by the function are:
+    -v, --verbose: Show more outputs
+    -j, --json: Path to the JSON file containing the service principals to obfuscate.
+    -o, --output: Path to the output file for the obfuscated service principals.
+    -k, --key: The key for obfuscation.
+
+    Example usage:
+    python run_obfuscate_service_principals.py -j principals.json -o obfuscated_principals -k obfuscation_key
+    """
     parser = argparse.ArgumentParser(description='Obfuscate Azure service principals.')
+    parser.add_argument('-v', '--verbose', action='store_true', help='Show more details')
     parser.add_argument('-j', '--json', help='The JSON file containing service principals to obfuscate', required=True)
     parser.add_argument('-o', '--output', help='The output file for the obfuscated service principals', required=True)
     parser.add_argument('-k', '--key', help='The key for obfuscation', required=True)
@@ -66,4 +95,5 @@ def run_obfuscate_service_principals():
     with open(args.output, 'wb') as f:
         f.write(obfuscated_service_principals)
 
-    print(f'Service principals obfuscated and written to: {args.output}')
+    if args.verbose:
+        print(f'Service principals obfuscated and written to: {args.output}')
