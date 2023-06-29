@@ -15,7 +15,7 @@ def main():
 
     The command line arguments expected by the function are:
     -v, --verbose: Show more outputs
-    -k, --obfuscation_key: An optional key used for decrypting an obfuscated principals file.
+    -k, --obfuscation_key: An optional file containing a key used for decrypting an obfuscated principals file.
     -p, --principals: Path to the file containing the Azure service principals.
     -m, --map: Path to a JSON file containing a mapping between secret names and environment variable names.
     -u, --url: The URL of your Azure Key Vault.
@@ -41,7 +41,9 @@ def main():
     if args.obfuscation_key:
         with open(args.principals, 'rb') as f:
             encrypted_principals = f.read()
-        key_data = decrypt_service_principals(args.obfuscation_key, encrypted_principals)
+        with open(args.obfuscation_key) as f:
+            obfuscation_key = f.read().strip()
+        key_data = decrypt_service_principals(obfuscation_key, encrypted_principals)
     else:
         # Load the service principals from the key file
         with open(args.principals, 'r') as f:
