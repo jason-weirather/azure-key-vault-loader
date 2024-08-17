@@ -14,6 +14,35 @@ pip install azure-vault-loader
 
 ## Usage
 
+### Access your service principle from your Azure account.
+
+1. Start by going to All services
+2. Go to Microsoft Entra ID
+
+* "tenant" can be found here, its also in other places under Directory (tenant) ID
+
+3. Go to Applications
+
+4. Go to the specific application
+
+* "appId"is the Application (client) ID
+* "name" is the display name
+* "displayName" is the display name
+
+5. Go to your credentials
+
+* "password" is your secret here, which you can create a new one as needed
+
+```json
+{
+  "appId": "FILL_THIS_IN",
+  "displayName": "FILL_THIS_IN",
+  "name": "FILL_THIS_IN",
+  "password": "FILL_THIS_IN",
+  "tenant": "FILL_THIS_IN"
+}
+```
+
 ```bash
 load_azure_secrets -k obfuscation_key -p principals -m map -u url -c command with or without arguments
 ```
