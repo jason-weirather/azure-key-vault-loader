@@ -26,8 +26,6 @@ pip install azure-vault-loader
 4. Go to the specific application
 
 * "appId"is the Application (client) ID
-* "name" is the display name
-* "displayName" is the display name
 
 5. Go to your credentials
 
@@ -36,8 +34,6 @@ pip install azure-vault-loader
 ```json
 {
   "appId": "FILL_THIS_IN",
-  "displayName": "FILL_THIS_IN",
-  "name": "FILL_THIS_IN",
   "password": "FILL_THIS_IN",
   "tenant": "FILL_THIS_IN"
 }
